@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../helpers/axiosInstance";
 import toast from "react-hot-toast";
+import { BASE_URL } from "../../constants";
 
 const initialState = {
     loading: false,
@@ -20,7 +21,7 @@ export const createAccount = createAsyncThunk("register", async (data) => {
     }
 
     try {
-        const response = await axiosInstance.post("/users/register", formData);
+        const response = await axiosInstance.post(`${BASE_URL}/users/register`, formData);
         console.log(response.data);
         toast.success("Registered successfully!!!");
         return response.data;
@@ -32,7 +33,7 @@ export const createAccount = createAsyncThunk("register", async (data) => {
 
 export const userLogin = createAsyncThunk("login", async (data) => {
     try {
-        const response = await axiosInstance.post("/users/login", data);
+        const response = await axiosInstance.post(`${BASE_URL}/users/login`, data);
         return response.data.data.user;
     } catch (error) {
         toast.error(error?.response?.data?.error);
